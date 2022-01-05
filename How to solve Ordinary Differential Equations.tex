@@ -1,0 +1,303 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage[american]{babel}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage[utf8x]{inputenc}
+\setlength{\parindent}{2em}
+\setlength{\parskip}{1em}
+\usepackage{indentfirst}
+\usepackage{float}
+\usepackage[sfdefault]{FiraSans} %% option 'sfdefault' activates Fira Sans as the default text font
+\usepackage[T1]{fontenc}
+\renewcommand*\oldstylenums[1]{{\firaoldstyle #1}}
+\usepackage[titles]{tocloft}
+\renewcommand{\cftdot}{}
+\usepackage[colorlinks=true, allcolors=magenta]{hyperref}
+\usepackage{url}
+\usepackage{hyperref}
+\usepackage{systeme}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=magenta,
+    filecolor=cyan,      
+    urlcolor=magenta,
+    pdftitle={How to Solve Ordinary Differential Equations},
+    pdfpagemode=FullScreen,
+    }
+\author{Adair Antonio da Silva Neto}
+\title{How to Solve Ordinary Differential Equations}
+
+\begin{document}
+
+\clearpage\maketitle
+\thispagestyle{empty}
+
+\newpage
+
+\tableofcontents
+
+\newpage
+\clearpage
+\setcounter{page}{1}
+
+\section{First Order Linear}\label{first-order-linear}
+
+\subsection{Integrating Factor}\label{integrating-factor}
+
+Applies to \(y'(t) + p(t)y(t) = q(t)\).
+
+First step: Let \(\mu(t) = e^{\int p(t)dt}\) be the integrating factor.
+
+Second step: Multiply the ODE by this factor and write
+\([\mu(t)y]' = q_1(t)\).
+
+Third step: Integrate both sides to obtain \(y(t)\).
+
+\subsection{Separate Equations}\label{separate-equations}
+
+Applies to $$g(y) \frac{dy}{dt} = f(t)$$
+
+First step: Isolate the factors of \(y\) and \(t\) to obtain the format above.
+
+Second step: Integrate both sides to obtain \(y(t)\). 
+$$\int g(y)dy = \int f(t) dt$$
+
+\section{First Order Non-Linear}\label{first-order-non-linear}
+
+\subsection{Separate Equations}
+
+Same as \hyperref[separate-equations]{above}.
+
+\subsection{Substitution Method}
+
+There are two main cases here. The first is when the DE does not depend on $y$, like $ay'(t)=f(t)$. Then we set $v(t) = y'(t)$, thus obtaining $av(t)=f(t)$. 
+
+The second case is when the DE does not depend on $t$.  We set $v(y(t)) = y'(t)$. 
+
+We'll see more details and applications on \hyperref[reductio]{second order DEs}.
+
+\subsection{Homogenous Equations}
+
+Applies to \[ y' = f\left(\frac{y}{t}\right) \]
+
+First step: let $v(t) = \frac{y(t)}{t}$. Then $tv(t)=y(t)$.
+
+Second step: differentiate to obtain $v(t)+tv'(t)=y'(t)$.
+
+Third step: let $y'(t)=f(v)$. Then use the method of separate equations.
+
+\subsection{Bernoulli Equations}
+
+Applies to 
+
+\[
+y'+p(t)y=f(t)y^n
+\]
+
+Notice that by dividing the equation by $y^n$ we obtain
+
+\[
+y^{-n}y'+p(t)yy^{-n}=f(t)
+\]
+
+It's natural then to substitute $v=y^{1-n}$. Which gives us $v' = (1-n)y^{-n}y' \iff \frac{1}{(1-n)}v'=y^{-n}y'$.
+
+Just multiplying by $(1-n)$ we get $v'+(1-n)p(t)v=(1-n)f(t)$ which is linear.
+
+\subsection{Ricatti Equations}
+
+Applies to
+
+\[
+y'+p(t)y+q(t)y^2=f(t)
+\]
+
+given a solution $y_1(t)$.
+
+First step: let $y_2(t)=z+y_1(t)$ where $z=\frac{1}{v}$.
+
+Then compute $\frac{dy_2(t)}{dt}$ and substitute in the equation.
+
+\subsection{Exact Equations}
+
+Applies to
+
+\[
+M(x,y)dx+N(x,y)dy=0
+\]
+
+where $M(x,y)=\frac{\partial F}{\partial x}$ and $N(x,y)=\frac{\partial F}{\partial y}$. 
+
+Note that it only works if $F$ is a conservative field. Then, the first step is to check if $M_y = N_x$, which is called exactness criterion. If the equality holds, then we must find $F(x,y)=C$.
+
+So we integrate $M$ or $N$ in respect to $dx$ or $dy$ respectively, find the $g(y)$ or $g(x)$ to write $F(x,y)=C$.
+
+If the equation is not exact, we may find an integrating factor $\mu$ that only depends on $x$ or $y$, which gives us the following criteria:
+
+\[
+\frac{N_x - M_y}{M} \text{ depends only on y } \implies \mu(y) = e^{\int \frac{N_x - M_y}{M}}
+\]
+
+\[
+\frac{M_y - N_x}{N} \text{ depends only on x } \implies \mu(x) = e^{\int \frac{M_y - N_x}{N}}
+\]
+
+\section{Higher Order Linear, Homogeneous, Constant Coeficients}\label{higher-order-linear-homogeneous-constant-coeficients}
+
+\subsection{Abel's Formula}
+
+\[
+W(x,y) = W_0 e^{- \int p(t)dt}
+\]
+
+\subsection{General Case}
+
+We take a possible solution $y(x)=e^{rx}$ and substitute into the equation. Then $e^{rx}$ can be factored out giving us a polynomial equation.
+
+The first case, when we obtain $n$ distinct roots, is immediate: $y = c_1e^{r_1x} + c_2e^{r_2x}$.
+
+If there are repeated roots, then the second solution (assuming $n=2$) will be $y = c_1e^{r_1x} + c_2xe^{r_2x}$.
+
+If the roots are complex, then we write $y_1 = e^{(a+bi)x}$, $y_2 = e^{(a-bi)x}$. Using Euler's Formula and the fact that the real and imaginary parts are solutions of the DE, we have $y=e^{at}(\cos{bx}+\sin{bx})$.
+
+\subsection{Reduction of Order}\label{reductio}
+
+There are three main cases. The first two we already saw in First Order DEs. 
+
+The first is when the DE does not depend on $y$, like $ay'(t)=f(t)$. Then we set $v(t) = y'(t)$ and $v'(t) = y''(t)$.
+
+The second case is when the DE does not depend on $t$.  We set $v(y(t)) = y'(t)$. Taking the derivative, $v'(y(t))y'(t)=y''(t) \iff v'(y)v(y)=y''$. 
+
+The third case is when we know a solution $y_1(t)$. Then we take as a candidate a $v(t)y_1(t)=y_2(t)$. We then differentiate twice and replace it in the equation setting $v'=w$.
+
+\section{Higher Order Linear, Non-Homogeneous, Constant Coeficients}\label{higher-order-linear-non-homogeneous-constant-coeficients}
+
+\subsection{Undetermined Coefficients}
+
+We know that the solution is the sum of the complementary solution (of the corresponding homogeneous function) with the particular solution. The idea is to write the particular solution $y_p$ as something similar to the right hand side.  
+
+\begin{center}
+\begin{tabular}{c|c}
+$f(x)$ & $y_p$ \\ \hline
+$ae^{rx}$ & $x^s A e^{rx}$ \\
+$a_nx^n+\ldots+a_1x+a_0$ & $x^s(A_nx^n+\ldots+A_0)$ \\
+$a\cos{x} + b\sin{x}$ & $x^s(A\cos{x}+B\sin{x})$ \\
+$e^{rx}P_n(x)$ & $x^s e^{rx} (A_nx^n+\ldots+A_0)$ \\
+$e^{rx} (a\cos{kx} + b\sin{kx})$ & $x^s(Ae^{rx}\cos{kx}+Be^{rx}\sin{kx})$\\
+$P_n(x)(a\cos{kx} + b\sin{kx})$ & $x^s[(A_nx^n+\ldots+A_0)\cos{kx} + (B_nx^n+\ldots+B_0)\sin{kx}]$
+\end{tabular}
+\end{center}
+
+where we choose $s$ to be the least integer that eliminates repetition in the solution.
+
+If the right hand side cannot be written as given above, then we should use the method of variation of parameters below.
+
+\section{Higher Order Linear, Homogeneous, Variable Coeficients}\label{higher-order-linear-homogeneous-variable-coeficients}
+
+\subsection{Euler-Cauchy Equation}
+
+Applies to
+
+\[
+a_nx^ny^{(n)} + a_{n-1}x^{n-1}y^{(n-1)}+\ldots+a_1xy^{(1)}+a_0y=0
+\]
+
+Here we have an equidimensional equation, where the degree of the $n$th power is equal to the order of the derivative. A possible solution is a power of $x$. Thus $y(x)=x^r$.
+
+We then differentiate $y$ until the desired order and replace it in the equation. By factoring $x^r$ out of the equation, we obtain a characteristic equation. 
+
+If we have repeated roots, by reduction of order, we obtain that the next solution is $C \ln x$ times the given solution. Then, $y = c_1 x^r + c_2 x^r \ln x$ (for $n=2$).
+
+\subsection{Variation of Parameters}
+
+Applies to
+
+\[
+y^{(n)}+p_{n-1}(x)y^{(n-1)}+\ldots+p_1(x)y^{(1)}+p_0(x)y=f(x)
+\]
+
+Given that the coeficients and the right hand side $f(x)$ are continuous in the interval $I$ (due to the Existence and Uniqueness Theorem), the first step is to the solve the complementary equation.
+
+The idea is to replace the constants with functions $u_1(x), \ldots, u_n(x)$. 
+
+Then we compute the derivatives using that, since we have one degree of freedom, we can assume that $u_1'y_1+u_2'y_2=0$. 
+
+We can now replace the particular solution into the equation and we should solve
+
+\[
+\left\{\begin{split}
+u_1'y_1&+u_2'y_2=0 \\
+u_1'y_1'&+u_2'y_2'=f(x) \\ 
+\end{split}\right.
+\]
+
+Notice that the determinant of the coefficients is the wronskian $W(y_1,y_2)$.
+
+By Cranmer's Rule:
+
+\[
+u_1' = \frac{\begin{vmatrix} 0 & y_2 \\ f(x) & y_2' \end{vmatrix}}{W} \text{ and } u_2' = \frac{\begin{vmatrix} y_1 & 0 \\ y_1' & f(x) \end{vmatrix}}{W}
+\]
+
+Integrating, we obtain $u_1$ and $u_2$.
+
+\section{Series Solutions of Second Order Equations}
+
+We will work here with equations of the form 
+\[
+y'' + P(x)y' + Q(x) = 0
+\]
+
+If $P(x)$ and $Q(x)$ are analytic in $x=a$, then $x = a$ is said ordinary point. Otherwise, it is said singular point.
+
+\subsection{Ordinary Points}
+
+We're looking for solutions like
+\[
+y(x) = \sum_{k=0}^{\infty} c_k x^k
+\]
+
+Hence
+\[
+y'(x) =  \sum_{k=1}^{\infty} c_k k x^{k-1}
+\]
+
+and
+\[
+y'(x) =  \sum_{k=2}^{\infty} c_k k (k-1) x^{k-2}
+\]
+
+We then replace those series in the equation, rearrange the terms and use the identity principle to find the recurrence relation. Using this relation, we find the coefficients $c_k$ and we're ready to write our linearly independent solutions.
+
+\subsection{Regular Singular Points}
+
+If $$\lim_{x \to a} (x-a) P(x)$$ and $$\lim_{x \to a} (x-a)^2 Q(x)$$ are both finite, then $x=a$ is said a regular singular point.
+
+Remembering Euler-Cauchy equation, a possible solution is of the form
+\[
+y(x) = x^r \sum_{k=0}^{\infty} c_k x^k = \sum_{k=0}^{\infty} c_k x^{k+r}
+\]
+
+Which gives us
+\[
+y'(x) = \sum_{k=0}^{\infty} c_k (k+r) x^{k+r-1}
+\]
+
+and
+\[
+y''(x) = \sum_{k=0}^{\infty} c_k (k+r)(k+r-1) x^{k+r-2}
+\]
+
+Replacing those series in the equation and using the identity principle, we'll find an equation of the form 
+\[
+r(r-1)+p_0 r + q_0 = 0
+\]
+where $p_0 = P(0)$ and $q_0 = Q(0)$. This equation is called \textbf{indicial equation}. 
+
+Let $r_1$ and $r_2$ be the roots of the indicial equation and $r_1 > r_2$. If $r_1 - r_2 \not \in \mathbb{Z}^+ \cup \{ 0 \}$, then we can obtain two linearly independent solutions
+\[
+y_1(x) = \sum_{k=0}^{\infty} a_k x^{k+r_1} \text{ and } y_2(x) = \sum_{k=0}^{\infty} b_k x^{k+r_2} 
+\]
+
+\end{document}
